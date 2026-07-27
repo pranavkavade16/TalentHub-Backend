@@ -1,26 +1,21 @@
 import { Schema } from "mongoose";
 
-export const certificationSchema = new Schema(
-  {
-    name: {
-      type: String,
-      required: true,
-    },
-
-    issuingOrganization: {
-      type: String,
-      required: true,
-    },
-
-    issueDate: Date,
-
-    expiryDate: Date,
-
-    credentialId: String,
-
-    credentialUrl: String,
+export const certificationSchema = new Schema({
+  name: {
+    type: String,
+    required: true,
   },
-  {
-    _id: false,
+
+  issuingOrganization: {
+    type: String,
+    required: true,
   },
-);
+
+  issueDate: Date,
+
+  expiryDate: Date,
+
+  credentialId: String,
+
+  credentialUrl: String,
+});
