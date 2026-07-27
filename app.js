@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import { initializeDatabase } from "./config/db.config.js";
 import authRoutes from "./modules/auth/auth.routes.js";
-
+import cookieParser from "cookie-parser";
 import { errorHandler } from "./shared/middleware/errorHandler.js";
 import dotenv from "dotenv";
 
@@ -18,6 +18,7 @@ app.use(
 
 // Parse JSON request body
 app.use(express.json());
+app.use(cookieParser());
 initializeDatabase();
 
 app.get("/health", (req, res) => {
