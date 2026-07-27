@@ -1,9 +1,11 @@
 import ApiError from "../../shared/utils/ApiError.js";
+import jwt from "jsonwebtoken";
 
 import {
   findUserByEmail,
   createUser,
   findUserByEmailWithPassword,
+  findUserByIdWithRefreshToken,
 } from "../users/users.repository.js";
 
 export const registerUser = async (userData) => {
@@ -46,4 +48,26 @@ export const loginUser = async (loginData) => {
     accessToken,
     refreshToken,
   };
+};
+
+export const refreshAccessToken = async (refreshToken) => {
+  if (!refreshToken) {
+    throw new ApiError(401, "Refresh token is required.");
+  }
+
+  const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
+
+  const user = await findUserByIdWithRefreshToken(decoded.id);
+
+  if (!user) {
+    throw new ApiError(401, "Invalid refresh token.");
+  }
+
+  if (user.refreshToken !== refreshToken) {
+    throw new ApiError(401, "Refresh token is invalid.");
+  }
+
+  const accessToken = user.generateAccessToken();
+
+  return accessToken;
 };
