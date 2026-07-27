@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 
-import { toJSONPlugin } from "../../shared/plugins/toJSON.plugin.js";
+import { toJSONPlugin } from "../../shared/plungins/toJSON.plugin.js";
 
 const { Schema } = mongoose;
 

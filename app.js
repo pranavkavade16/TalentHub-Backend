@@ -3,7 +3,7 @@ import cors from "cors";
 import { initializeDatabase } from "./config/db.config.js";
 import authRoutes from "./modules/auth/auth.routes.js";
 
-import errorHandler from "./shared/middleware/errorHandler.js";
+import { errorHandler } from "./shared/middleware/errorHandler.js";
 
 const app = express();
 

@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
-const initializeDatabase = async () => {
+export const initializeDatabase = async () => {
   try {
     await mongoose.connect(process.env.MONGODB);
     console.log("MongoDB Connected");
