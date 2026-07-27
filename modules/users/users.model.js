@@ -86,6 +86,12 @@ const userSchema = new Schema(
       type: Date,
       default: null,
     },
+
+    refreshToken: {
+      type: String,
+      default: null,
+      select: false,
+    },
   },
   {
     timestamps: true,
@@ -109,5 +115,30 @@ userSchema.methods.comparePassword = async function (candidatePassword) {
 };
 
 userSchema.plugin(toJSONPlugin);
+
+userSchema.methods.generateAccessToken = function () {
+  return jwt.sign(
+    {
+      id: this._id,
+      role: this.role,
+    },
+    process.env.JWT_ACCESS_SECRET,
+    {
+      expiresIn: process.env.JWT_ACCESS_EXPIRY,
+    },
+  );
+};
+
+userSchema.methods.generateRefreshToken = function () {
+  return jwt.sign(
+    {
+      id: this._id,
+    },
+    process.env.JWT_REFRESH_SECRET,
+    {
+      expiresIn: process.env.JWT_REFRESH_EXPIRY,
+    },
+  );
+};
 
 export default mongoose.model("User", userSchema);
