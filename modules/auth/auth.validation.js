@@ -26,3 +26,13 @@ export const registerUserSchema = z.object({
 
   role: z.enum(["candidate", "recruiter"]),
 });
+
+export const loginSchema = z.object({
+  email: z
+    .string()
+    .trim()
+    .email("Invalid email")
+    .transform((email) => email.toLowerCase()),
+
+  password: z.string().min(1, "Password is required"),
+});
