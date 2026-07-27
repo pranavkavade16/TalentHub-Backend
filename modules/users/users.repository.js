@@ -11,3 +11,7 @@ export const createUser = async (userData) => {
 export const findUserByEmailWithPassword = async (email) => {
   return User.findOne({ email }).select("+password +refreshToken");
 };
+
+export const findUserById = async (id) => {
+  return User.findById(id);
+};
