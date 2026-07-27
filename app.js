@@ -4,7 +4,9 @@ import { initializeDatabase } from "./config/db.config.js";
 import authRoutes from "./modules/auth/auth.routes.js";
 
 import { errorHandler } from "./shared/middleware/errorHandler.js";
+import dotenv from "dotenv";
 
+dotenv.config();
 const app = express();
 
 app.use(

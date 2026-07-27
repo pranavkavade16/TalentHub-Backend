@@ -92,8 +92,6 @@ const userSchema = new Schema(
   },
 );
 
-userSchema.index({ email: 1 }, { unique: true });
-
 userSchema.virtual("fullName").get(function () {
   return `${this.firstName} ${this.lastName}`;
 });
