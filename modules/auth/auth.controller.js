@@ -5,15 +5,9 @@ export const register = async (req, res, next) => {
   try {
     const user = await registerUser(req.body);
 
-    return res.status(201).json(
-      new ApiResponse(201, "User registered successfully.", {
-        id: user._id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        role: user.role,
-      }),
-    );
+    return res
+      .status(201)
+      .json(new ApiResponse(201, "User registered successfully.", user));
   } catch (error) {
     next(error);
   }
@@ -33,13 +27,7 @@ export const login = async (req, res, next) => {
     return res.status(200).json(
       new ApiResponse(200, "Login successful.", {
         accessToken,
-        user: {
-          id: user._id,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          email: user.email,
-          role: user.role,
-        },
+        user,
       }),
     );
   } catch (error) {
