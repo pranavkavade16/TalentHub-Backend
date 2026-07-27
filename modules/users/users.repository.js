@@ -15,3 +15,7 @@ export const findUserByEmailWithPassword = async (email) => {
 export const findUserById = async (id) => {
   return User.findById(id);
 };
+
+export const findUserByIdWithRefreshToken = async (id) => {
+  return User.findById(id).select("+refreshToken");
+};
