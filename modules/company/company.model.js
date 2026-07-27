@@ -5,8 +5,8 @@ import { addressSchema } from "../../shared/schemas/core/address.schema.js";
 import { contactSchema } from "../../shared/schemas/core/contact.schema.js";
 import { socialLinksSchema } from "../../shared/schemas/core/socialLinks.schema.js";
 
-import { COMPANY_SIZE } from "../../shared/constants/companySize.js";
-import { INDUSTRIES } from "../../shared/constants/industry.js";
+import { COMPANY_SIZE } from "../../shared/constants/company/companySize.js";
+import { INDUSTRIES } from "../../shared/constants/company/industry.js";
 
 const { Schema } = mongoose;
 
