@@ -1,7 +1,7 @@
 import ApiResponse from "../../shared/utils/ApiResponse.js";
 import { registerUser } from "./auth.service.js";
 
-export const registerUser = async (req, res, next) => {
+export const register = async (req, res, next) => {
   try {
     const user = await registerUser(req.body);
 
