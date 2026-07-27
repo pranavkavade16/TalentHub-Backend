@@ -1,7 +1,7 @@
 import { ZodError } from "zod";
 import ApiError from "../utils/ApiError.js";
 
-const validate = (schema) => {
+export const validate = (schema) => {
   return (req, res, next) => {
     try {
       req.body = schema.parse(req.body);
@@ -16,4 +16,4 @@ const validate = (schema) => {
   };
 };
 
-export default validate;
+
