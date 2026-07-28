@@ -3,6 +3,7 @@ export * from "./auth/authProviders.js";
 
 export * from "./common/gender.js";
 export * from "./common/currencies.js";
+export * from "./common/sortOptions.js";
 
 export * from "./company/companySize.js";
 export * from "./company/industries.js";

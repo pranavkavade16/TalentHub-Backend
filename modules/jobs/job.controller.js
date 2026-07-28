@@ -37,3 +37,15 @@ export const getMyJobs = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getJobById = async (req, res, next) => {
+  try {
+    const job = await jobService.getJobById(req.params.jobId, req.user);
+
+    return res
+      .status(200)
+      .json(new ApiResponse(200, "Job fetched successfully.", job));
+  } catch (error) {
+    next(error);
+  }
+};

@@ -1,7 +1,8 @@
 import Job from "./job.model.js";
 import RecruiterProfile from "../recruiters/recruiterProfile.model.js";
-import { JOB_STATUS } from "../../shared/constants/job/jobStatus.js";
-import { SORT_OPTIONS } from "../../shared/constants/common/sortOptions.js";
+import { JOB_STATUS } from "../../shared/constants/index.js";
+import { SORT_OPTIONS } from "../../shared/constants/index.js";
+import { ROLES } from "../../shared/constants/index.js";
 import ApiError from "../../shared/utils/ApiError.js";
 
 const createJob = async (userId, jobData) => {
@@ -193,4 +194,61 @@ const getMyJobs = async (userId, query) => {
   };
 };
 
-export default { createJob, getJobs, getMyJobs };
+const getJobById = async (jobId, user) => {
+  const job = await Job.findOne({
+    _id: jobId,
+    isDeleted: false,
+  })
+    .populate({
+      path: "company",
+      select: "name logo website industry location",
+    })
+    .populate({
+      path: "recruiter",
+      select: "designation",
+      populate: {
+        path: "user",
+        select: "firstName lastName",
+      },
+    });
+
+  if (!job) {
+    throw new ApiError(404, "Job not found.");
+  }
+
+  // Public/Candidate
+  if (!user || user.role === ROLES.CANDIDATE) {
+    if (job.status !== JOB_STATUS.OPEN) {
+      throw new ApiError(404, "Job not found.");
+    }
+
+    await Job.findByIdAndUpdate(job._id, {
+      $inc: {
+        views: 1,
+      },
+    });
+
+    return job;
+  }
+
+  // Recruiter
+  if (user.role === ROLES.RECRUITER) {
+    const recruiter = await RecruiterProfile.findOne({
+      user: user._id,
+    });
+
+    if (!recruiter) {
+      throw new ApiError(404, "Recruiter profile not found.");
+    }
+
+    if (!job.recruiter.equals(recruiter._id)) {
+      throw new ApiError(403, "You are not authorized to view this job.");
+    }
+
+    return job;
+  }
+
+  return job;
+};
+
+export default { createJob, getJobs, getMyJobs, getJobById };

@@ -114,3 +114,9 @@ export const getMyJobsSchema = z.object({
       .default("newest"),
   }),
 });
+
+export const getJobByIdSchema = z.object({
+  params: z.object({
+    jobId: z.string().trim().min(1, "Job ID is required."),
+  }),
+});
