@@ -1,5 +1,10 @@
 import ApiResponse from "../../shared/utils/ApiResponse.js";
-import { registerUser, loginUser, refreshAccessToken } from "./auth.service.js";
+import {
+  registerUser,
+  loginUser,
+  refreshAccessToken,
+  logoutUser,
+} from "./auth.service.js";
 
 export const register = async (req, res, next) => {
   try {
@@ -46,6 +51,22 @@ export const refresh = async (req, res, next) => {
         accessToken,
       }),
     );
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const logout = async (req, res, next) => {
+  try {
+    await logoutUser(req.user.id);
+
+    res.clearCookie("refreshToken", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+    });
+
+    return res.status(200).json(new ApiResponse(200, "Logout successful."));
   } catch (error) {
     next(error);
   }

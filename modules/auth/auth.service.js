@@ -6,6 +6,7 @@ import {
   createUser,
   findUserByEmailWithPassword,
   findUserByIdWithRefreshToken,
+  updateRefreshToken,
 } from "../users/users.repository.js";
 
 export const registerUser = async (userData) => {
@@ -71,3 +72,9 @@ export const refreshAccessToken = async (refreshToken) => {
 
   return accessToken;
 };
+
+export const logoutUser = async (userId) => {
+  await updateRefreshToken(userId, null);
+};
+
+
