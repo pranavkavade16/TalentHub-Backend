@@ -6,6 +6,7 @@ import {
   getMyJobs,
   getJobById,
   updateJob,
+  deleteJob,
 } from "./job.controller.js";
 
 import { authenticate } from "../../shared/middleware/authenticate.js";
@@ -19,6 +20,7 @@ import {
   getMyJobsSchema,
   getJobByIdSchema,
   updateJobSchema,
+  deleteJobSchema,
 } from "./job.validator.js";
 
 const router = Router();
@@ -49,6 +51,14 @@ router.patch(
   authorize(ROLES.RECRUITER),
   validate(updateJobSchema),
   updateJob,
+);
+
+router.delete(
+  "/:jobId",
+  authenticate,
+  authorize(ROLES.RECRUITER),
+  validate(deleteJobSchema),
+  deleteJob,
 );
 
 export default router;

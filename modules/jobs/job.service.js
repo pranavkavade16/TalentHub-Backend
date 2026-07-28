@@ -280,4 +280,41 @@ const updateJob = async (userId, jobId, payload) => {
   return job;
 };
 
-export default { createJob, getJobs, getMyJobs, getJobById, updateJob };
+const deleteJob = async (userId, jobId) => {
+  const recruiter = await RecruiterProfile.findOne({
+    user: userId,
+  });
+
+  if (!recruiter) {
+    throw new ApiError(404, "Recruiter profile not found.");
+  }
+
+  const job = await Job.findOne({
+    _id: jobId,
+    isDeleted: false,
+  });
+
+  if (!job) {
+    throw new ApiError(404, "Job not found.");
+  }
+
+  if (!job.recruiter.equals(recruiter._id)) {
+    throw new ApiError(403, "You are not authorized to delete this job.");
+  }
+
+  job.isDeleted = true;
+  job.status = JOB_STATUS.CLOSED;
+
+  await job.save();
+
+  return;
+};
+
+export default {
+  createJob,
+  getJobs,
+  getMyJobs,
+  getJobById,
+  updateJob,
+  deleteJob,
+};

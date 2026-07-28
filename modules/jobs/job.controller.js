@@ -65,3 +65,15 @@ export const updateJob = async (req, res, next) => {
     next(error);
   }
 };
+
+export const deleteJob = async (req, res, next) => {
+  try {
+    await jobService.deleteJob(req.user._id, req.params.jobId);
+
+    return res
+      .status(200)
+      .json(new ApiResponse(200, "Job deleted successfully."));
+  } catch (error) {
+    next(error);
+  }
+};

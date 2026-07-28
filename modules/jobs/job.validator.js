@@ -181,3 +181,13 @@ export const updateJobSchema = z.object({
       },
     ),
 });
+
+export const deleteJobSchema = z.object({
+  params: z.object({
+    jobId: z
+      .string()
+      .refine((value) => mongoose.Types.ObjectId.isValid(value), {
+        message: "Invalid job id.",
+      }),
+  }),
+});
