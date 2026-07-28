@@ -1,6 +1,12 @@
 import { Router } from "express";
 
-import { createJob, getJobs, getMyJobs, getJobById } from "./job.controller.js";
+import {
+  createJob,
+  getJobs,
+  getMyJobs,
+  getJobById,
+  updateJob,
+} from "./job.controller.js";
 
 import { authenticate } from "../../shared/middleware/authenticate.js";
 import { authorize } from "../../shared/middleware/authorize.js";
@@ -12,6 +18,7 @@ import {
   getJobsSchema,
   getMyJobsSchema,
   getJobByIdSchema,
+  updateJobSchema,
 } from "./job.validator.js";
 
 const router = Router();
@@ -35,5 +42,13 @@ router.get(
 );
 
 router.get("/:jobId", validate(getJobByIdSchema), getJobById);
+
+router.patch(
+  "/:jobId",
+  authenticate,
+  authorize(ROLES.RECRUITER),
+  validate(updateJobSchema),
+  updateJob,
+);
 
 export default router;

@@ -251,4 +251,33 @@ const getJobById = async (jobId, user) => {
   return job;
 };
 
-export default { createJob, getJobs, getMyJobs, getJobById };
+const updateJob = async (userId, jobId, payload) => {
+  const recruiter = await RecruiterProfile.findOne({
+    user: userId,
+  });
+
+  if (!recruiter) {
+    throw new ApiError(404, "Recruiter profile not found.");
+  }
+
+  const job = await Job.findOne({
+    _id: jobId,
+    isDeleted: false,
+  });
+
+  if (!job) {
+    throw new ApiError(404, "Job not found.");
+  }
+
+  if (!job.recruiter.equals(recruiter._id)) {
+    throw new ApiError(403, "You are not authorized to update this job.");
+  }
+
+  Object.assign(job, payload);
+
+  await job.save();
+
+  return job;
+};
+
+export default { createJob, getJobs, getMyJobs, getJobById, updateJob };

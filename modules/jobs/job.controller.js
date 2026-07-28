@@ -49,3 +49,19 @@ export const getJobById = async (req, res, next) => {
     next(error);
   }
 };
+
+export const updateJob = async (req, res, next) => {
+  try {
+    const job = await jobService.updateJob(
+      req.user._id,
+      req.params.jobId,
+      req.body,
+    );
+
+    return res
+      .status(200)
+      .json(new ApiResponse(200, "Job updated successfully.", job));
+  } catch (error) {
+    next(error);
+  }
+};

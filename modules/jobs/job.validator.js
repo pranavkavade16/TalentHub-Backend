@@ -1,5 +1,5 @@
 import { z } from "zod";
-
+import mongoose from "mongoose";
 import {
   EMPLOYMENT_TYPES,
   EXPERIENCE_LEVELS,
@@ -119,4 +119,65 @@ export const getJobByIdSchema = z.object({
   params: z.object({
     jobId: z.string().trim().min(1, "Job ID is required."),
   }),
+});
+
+export const updateJobSchema = z.object({
+  params: z.object({
+    jobId: z
+      .string()
+      .refine((value) => mongoose.Types.ObjectId.isValid(value), {
+        message: "Invalid job id.",
+      }),
+  }),
+
+  body: z
+    .object({
+      title: z.string().trim().min(3).max(120).optional(),
+
+      description: z.string().trim().min(20).optional(),
+
+      responsibilities: z.array(z.string().trim()).optional(),
+
+      requirements: z.array(z.string().trim()).optional(),
+
+      skills: z.array(z.string().trim()).optional(),
+
+      experienceLevel: z.enum(Object.values(EXPERIENCE_LEVELS)).optional(),
+
+      minimumExperience: z.number().min(0).optional(),
+
+      maximumExperience: z.number().min(0).optional(),
+
+      employmentType: z.enum(Object.values(EMPLOYMENT_TYPES)).optional(),
+
+      workplaceType: z.enum(Object.values(WORKPLACE_TYPES)).optional(),
+
+      salary: salarySchema.optional(),
+
+      location: addressSchema.optional(),
+
+      vacancies: z.number().int().min(1).optional(),
+
+      applicationDeadline: z.coerce.date().optional(),
+
+      benefits: z.array(benefitSchema).optional(),
+
+      status: z.enum(Object.values(JOB_STATUS)).optional(),
+    })
+    .refine(
+      (data) => {
+        if (
+          data.minimumExperience !== undefined &&
+          data.maximumExperience !== undefined
+        ) {
+          return data.maximumExperience >= data.minimumExperience;
+        }
+
+        return true;
+      },
+      {
+        message: "Maximum experience cannot be less than minimum experience.",
+        path: ["maximumExperience"],
+      },
+    ),
 });
