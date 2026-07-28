@@ -124,4 +124,73 @@ const getJobs = async (query) => {
   };
 };
 
-export default { createJob, getJobs };
+const getMyJobs = async (userId, query) => {
+  const recruiter = await RecruiterProfile.findOne({
+    user: userId,
+  });
+
+  if (!recruiter) {
+    throw new ApiError(404, "Recruiter profile not found.");
+  }
+
+  const { page, limit, search, status, sort } = query;
+
+  const filter = {
+    recruiter: recruiter._id,
+    isDeleted: false,
+  };
+
+  if (search) {
+    filter.$text = {
+      $search: search,
+    };
+  }
+
+  if (status) {
+    filter.status = status;
+  }
+
+  const skip = (page - 1) * limit;
+
+  const queryBuilder = Job.find(filter)
+    .populate({
+      path: "company",
+      select: "name logo",
+    })
+    .sort(SORT_OPTIONS[sort] || SORT_OPTIONS.newest)
+    .skip(skip)
+    .limit(limit);
+
+  if (search) {
+    queryBuilder.select({
+      score: {
+        $meta: "textScore",
+      },
+    });
+
+    queryBuilder.sort({
+      score: {
+        $meta: "textScore",
+      },
+    });
+  }
+
+  const [jobs, totalJobs] = await Promise.all([
+    queryBuilder,
+    Job.countDocuments(filter),
+  ]);
+
+  return {
+    jobs,
+    pagination: {
+      totalItems: totalJobs,
+      currentPage: page,
+      pageSize: limit,
+      totalPages: Math.ceil(totalJobs / limit),
+      hasNextPage: page < Math.ceil(totalJobs / limit),
+      hasPreviousPage: page > 1,
+    },
+  };
+};
+
+export default { createJob, getJobs, getMyJobs };

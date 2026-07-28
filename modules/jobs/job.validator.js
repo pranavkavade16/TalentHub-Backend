@@ -98,3 +98,19 @@ export const getJobsSchema = z.object({
       .default("newest"),
   }),
 });
+
+export const getMyJobsSchema = z.object({
+  query: z.object({
+    page: z.coerce.number().int().min(1).default(1),
+
+    limit: z.coerce.number().int().min(1).max(100).default(10),
+
+    search: z.string().trim().optional(),
+
+    status: z.enum(Object.values(JOB_STATUS)).optional(),
+
+    sort: z
+      .enum(["newest", "oldest", "titleAsc", "titleDesc"])
+      .default("newest"),
+  }),
+});
