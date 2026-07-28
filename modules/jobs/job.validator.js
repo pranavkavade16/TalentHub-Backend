@@ -74,3 +74,27 @@ export const createJobSchema = z
       });
     }
   });
+
+export const getJobsSchema = z.object({
+  query: z.object({
+    page: z.coerce.number().int().min(1).default(1),
+
+    limit: z.coerce.number().int().min(1).max(100).default(10),
+
+    search: z.string().trim().optional(),
+
+    employmentType: z.enum(Object.values(EMPLOYMENT_TYPES)).optional(),
+
+    workplaceType: z.enum(Object.values(WORKPLACE_TYPES)).optional(),
+
+    experienceLevel: z.enum(Object.values(EXPERIENCE_LEVELS)).optional(),
+
+    city: z.string().trim().optional(),
+
+    skills: z.string().trim().optional(),
+
+    sort: z
+      .enum(["newest", "oldest", "titleAsc", "titleDesc"])
+      .default("newest"),
+  }),
+});
