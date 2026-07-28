@@ -185,4 +185,17 @@ jobSchema.index({
   featured: 1,
 });
 
+jobSchema.pre("validate", function (next) {
+  if (
+    this.maximumExperience &&
+    this.maximumExperience < this.minimumExperience
+  ) {
+    return next(
+      new Error("Maximum experience cannot be less than minimum experience."),
+    );
+  }
+
+  next();
+});
+
 export default mongoose.model("Job", jobSchema);
