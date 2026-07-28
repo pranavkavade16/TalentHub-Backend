@@ -137,7 +137,13 @@ const jobSchema = new Schema(
       type: Date,
       default: null,
     },
+    isDeleted: {
+      type: Boolean,
+      default: false,
+      index: true,
+    },
   },
+
   {
     timestamps: true,
   },
