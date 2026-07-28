@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
-import { contactSchema } from "../../shared/schemas/core/contact.schema.js";
-import { socialLinksSchema } from "../../shared/schemas/core/socialLinks.schema.js";
+import { contactSchema } from "../../shared/schemas/contact.schema.js";
+import { socialLinksSchema } from "../../shared/schemas/socialLinks.schema.js";
 import { toJSONPlugin } from "../../shared/plungins/toJSON.plugin.js";
 
 const { Schema } = mongoose;
@@ -52,7 +52,6 @@ const recruiterProfileSchema = new Schema(
     isHiring: {
       type: Boolean,
       default: true,
-      index: true,
     },
 
     profileCompletion: {

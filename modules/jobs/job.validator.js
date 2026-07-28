@@ -7,9 +7,9 @@ import {
   WORKPLACE_TYPES,
 } from "../../shared/constants/index.js";
 
-import { addressSchema } from "../../shared/validators/address.validation.js";
-import { benefitSchema } from "../../shared/validators/benefit.validation.js";
-import { salarySchema } from "../../shared/validators/salary.validation.js";
+import { addressSchema } from "../../shared/validators/address.validator.js";
+import { benefitSchema } from "../../shared/validators/benefit.validator.js";
+import { salarySchema } from "../../shared/validators/salary.validator.js";
 
 export const createJobSchema = z
   .object({

@@ -1,10 +1,10 @@
-import Job from "./jobs.model.js";
+import Job from "./job.model.js";
 import RecruiterProfile from "../recruiters/recruiterProfile.model.js";
 import { JOB_STATUS } from "../../shared/constants/job/jobStatus.js";
 import { SORT_OPTIONS } from "../../shared/constants/common/sortOptions.js";
 import ApiError from "../../shared/utils/ApiError.js";
 
-export const createJob = async (userId, jobData) => {
+const createJob = async (userId, jobData) => {
   const recruiter = await RecruiterProfile.findOne({
     user: userId,
   });
@@ -124,6 +124,4 @@ const getJobs = async (query) => {
   };
 };
 
-export default {
-  getJobs,
-};
+export default { createJob, getJobs };

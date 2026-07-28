@@ -6,7 +6,7 @@ import { contactSchema } from "../../shared/schemas/core/contact.schema.js";
 import { socialLinksSchema } from "../../shared/schemas/core/socialLinks.schema.js";
 import { toJSONPlugin } from "../../shared/plungins/toJSON.plugin.js";
 import { COMPANY_SIZE } from "../../shared/constants/company/companySize.js";
-import { INDUSTRIES } from "../../shared/constants/company/industry.js";
+import { INDUSTRIES } from "../../shared/constants/company/industries.js";
 
 const { Schema } = mongoose;
 

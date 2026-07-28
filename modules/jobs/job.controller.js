@@ -1,24 +1,27 @@
-import httpStatus from "http-status";
-
 import ApiResponse from "../../shared/utils/ApiResponse.js";
-import asyncHandler from "../../shared/utils/asyncHandler.js";
 
-import jobService from "./jobs.service.js";
+import jobService from "./job.service.js";
 
-export const createJob = asyncHandler(async (req, res) => {
-  const job = await jobService.createJob(req.user._id, req.body);
+export const createJob = async (req, res, next) => {
+  try {
+    const job = await jobService.createJob(req.user._id, req.body);
 
-  return res
-    .status(httpStatus.CREATED)
-    .json(
-      new ApiResponse(httpStatus.CREATED, "Job created successfully.", job),
-    );
-});
+    return res
+      .status(201)
+      .json(new ApiResponse(201, "Job created successfully.", job));
+  } catch (error) {
+    next(error);
+  }
+};
 
-export const getJobs = asyncHandler(async (req, res) => {
-  const jobs = await jobService.getJobs(req.query);
+export const getJobs = async (req, res, next) => {
+  try {
+    const jobs = await jobService.getJobs(req.query);
 
-  return res
-    .status(httpStatus.OK)
-    .json(new ApiResponse(httpStatus.OK, "Jobs fetched successfully.", jobs));
-});
+    return res
+      .status(200)
+      .json(new ApiResponse(200, "Jobs fetched successfully.", jobs));
+  } catch (error) {
+    next(error);
+  }
+};

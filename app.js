@@ -5,6 +5,7 @@ import authRoutes from "./modules/auth/auth.routes.js";
 import cookieParser from "cookie-parser";
 import { errorHandler } from "./shared/middleware/errorHandler.js";
 import dotenv from "dotenv";
+import jobRoutes from "./modules/jobs/job.routes.js";
 
 dotenv.config();
 const app = express();
@@ -31,6 +32,7 @@ app.get("/health", (req, res) => {
 /* -------------------------------- Routes -------------------------------- */
 
 app.use("/api/auth", authRoutes);
+app.use("/api", jobRoutes);
 
 app.use(errorHandler);
 

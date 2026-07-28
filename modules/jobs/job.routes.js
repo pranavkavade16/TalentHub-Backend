@@ -1,13 +1,13 @@
 import { Router } from "express";
 
-import { createJob, getJobs } from "./jobs.controller.js";
+import { createJob, getJobs } from "./job.controller.js";
 
-import authenticate from "../../middlewares/authenticate.js";
-import authorize from "../../middlewares/authorize.js";
-import validate from "../../middlewares/validate.js";
+import { authenticate } from "../../shared/middleware/authenticate.js";
+import { authorize } from "../../shared/middleware/authorize.js";
+import { validate } from "../../shared/middleware/validate.js";
 
 import { ROLES } from "../../shared/constants/auth/roles.js";
-import { createJobSchema, getJobSchema } from "./jobs.validation.js";
+import { createJobSchema, getJobsSchema } from "./job.validator.js";
 
 const router = Router();
 

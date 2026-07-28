@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 
-import { addressSchema } from "../../shared/schemas/core/address.schema.js";
-import { salarySchema } from "../../shared/schemas/core/salary.schema.js";
-import { benefitSchema } from "../../shared/schemas/core/benefit.schema.js";
+import { addressSchema } from "../../shared/schemas/address.schema.js";
+import { salarySchema } from "../../shared/schemas/salary.schema.js";
+import { benefitSchema } from "../../shared/schemas/benefit.schema.js";
 import { toJSONPlugin } from "../../shared/plungins/toJSON.plugin.js";
 
 import {
@@ -10,7 +10,7 @@ import {
   WORKPLACE_TYPES,
   EXPERIENCE_LEVELS,
   JOB_STATUS,
-} from "../../shared/constants";
+} from "../../shared/constants/index.js";
 
 const { Schema } = mongoose;
 
