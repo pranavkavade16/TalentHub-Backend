@@ -150,6 +150,11 @@ const jobSchema = new Schema(
 );
 
 jobSchema.index({
+  status: 1,
+  createdAt: -1,
+});
+
+jobSchema.index({
   title: "text",
   description: "text",
 });
