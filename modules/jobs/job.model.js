@@ -59,6 +59,7 @@ const jobSchema = new Schema(
       {
         type: String,
         trim: true,
+        lowercase: true,
       },
     ],
 
