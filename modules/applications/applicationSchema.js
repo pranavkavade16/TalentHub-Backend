@@ -99,6 +99,6 @@ applicationSchema.index({
   status: 1,
 });
 
-applicationSchema.plugin(applicationSchema);
+applicationSchema.plugin(toJSONPlugin);
 
 export default mongoose.model("Application", applicationSchema);
