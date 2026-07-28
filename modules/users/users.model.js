@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 import { toJSONPlugin } from "../../shared/plungins/toJSON.plugin.js";
 
@@ -103,7 +104,7 @@ userSchema.virtual("fullName").get(function () {
 });
 
 userSchema.pre("save", async function () {
-  if (!this.isModified("password")) return next();
+  if (!this.isModified("password")) return;
 
   const salt = await bcrypt.genSalt(12);
 
