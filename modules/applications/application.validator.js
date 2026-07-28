@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const applyJob = z.object({
+export const applyJobSchema = z.object({
   body: z.object({
     jobId: z.string().trim().min(1, "Job ID is required."),
     resumeId: z.string().trim().min(1, "Resume ID is required."),
