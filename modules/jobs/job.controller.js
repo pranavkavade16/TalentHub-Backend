@@ -14,3 +14,11 @@ export const createJob = asyncHandler(async (req, res) => {
       new ApiResponse(httpStatus.CREATED, "Job created successfully.", job),
     );
 });
+
+export const getJobs = asyncHandler(async (req, res) => {
+  const jobs = await jobService.getJobs(req.query);
+
+  return res
+    .status(httpStatus.OK)
+    .json(new ApiResponse(httpStatus.OK, "Jobs fetched successfully.", jobs));
+});
