@@ -12,7 +12,7 @@ import { createJobSchema } from "./jobs.validation.js";
 const router = Router();
 
 router.post(
-  "/",
+  "/jobs",
   authenticate,
   authorize(ROLES.RECRUITER),
   validate(createJobSchema),
