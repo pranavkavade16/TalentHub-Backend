@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import { addressSchema } from "../../shared/schemas/core/address.schema.js";
 import { salarySchema } from "../../shared/schemas/core/salary.schema.js";
 import { benefitSchema } from "../../shared/schemas/core/benefit.schema.js";
+import { toJSONPlugin } from "../../shared/plungins/toJSON.plugin.js";
 
 import {
   EMPLOYMENT_TYPES,
@@ -198,5 +199,7 @@ jobSchema.pre("validate", function (next) {
 
   next();
 });
+
+jobSchema.plugin(toJSONPlugin);
 
 export default mongoose.model("Job", jobSchema);

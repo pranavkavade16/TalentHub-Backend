@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 import { contactSchema } from "../../shared/schemas/core/contact.schema.js";
 import { socialLinksSchema } from "../../shared/schemas/core/socialLinks.schema.js";
+import { toJSONPlugin } from "../../shared/plungins/toJSON.plugin.js";
 
 const { Schema } = mongoose;
 
@@ -68,5 +69,7 @@ const recruiterProfileSchema = new Schema(
 
 recruiterProfileSchema.index({ company: 1 });
 recruiterProfileSchema.index({ isHiring: 1 });
+
+recruiterProfileSchema.plugin(toJSONPlugin);
 
 export default mongoose.model("RecruiterProfile", recruiterProfileSchema);

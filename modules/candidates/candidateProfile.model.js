@@ -4,7 +4,7 @@ import { addressSchema } from "../../shared/schemas/core/address.schema.js";
 import { salarySchema } from "../../shared/schemas/core/salary.schema.js";
 import { fileSchema } from "../../shared/schemas/core/file.schema.js";
 import { socialLinksSchema } from "../../shared/schemas/core/socialLinks.schema.js";
-
+import { toJSONPlugin } from "../../shared/plungins/toJSON.plugin.js";
 import { educationSchema } from "../../shared/schemas/candidate/education.schema.js";
 import { experienceSchema } from "../../shared/schemas/candidate/experience.schema.js";
 import { projectSchema } from "../../shared/schemas/candidate/project.schema.js";
@@ -49,13 +49,7 @@ const candidateProfileSchema = new Schema(
 
     experienceLevel: {
       type: String,
-      enum: [
-        "fresher",
-        "junior",
-        "mid",
-        "senior",
-        "lead",
-      ],
+      enum: ["fresher", "junior", "mid", "senior", "lead"],
       default: "fresher",
     },
 
@@ -127,13 +121,12 @@ const candidateProfileSchema = new Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 candidateProfileSchema.index({ skills: 1 });
 candidateProfileSchema.index({ yearsOfExperience: 1 });
 
-export default mongoose.model(
-  "CandidateProfile",
-  candidateProfileSchema
-);
+candidateProfileSchema.plugin(toJSONPlugin);
+
+export default mongoose.model("CandidateProfile", candidateProfileSchema);

@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 import { APPLICATION_STATUS } from "../../shared/constants";
-
+import { toJSONPlugin } from "../../shared/plungins/toJSON.plugin";
 const { Schema } = mongoose;
 
 const applicationSchema = new Schema(
@@ -84,7 +84,6 @@ const applicationSchema = new Schema(
   },
 );
 
-
 applicationSchema.index(
   {
     candidate: 1,
@@ -99,5 +98,7 @@ applicationSchema.index({
   recruiter: 1,
   status: 1,
 });
+
+applicationSchema.plugin(applicationSchema);
 
 export default mongoose.model("Application", applicationSchema);

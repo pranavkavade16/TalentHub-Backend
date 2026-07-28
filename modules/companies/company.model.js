@@ -4,7 +4,7 @@ import { fileSchema } from "../../shared/schemas/core/file.schema.js";
 import { addressSchema } from "../../shared/schemas/core/address.schema.js";
 import { contactSchema } from "../../shared/schemas/core/contact.schema.js";
 import { socialLinksSchema } from "../../shared/schemas/core/socialLinks.schema.js";
-
+import { toJSONPlugin } from "../../shared/plungins/toJSON.plugin.js";
 import { COMPANY_SIZE } from "../../shared/constants/company/companySize.js";
 import { INDUSTRIES } from "../../shared/constants/company/industry.js";
 
@@ -86,5 +86,7 @@ companySchema.index({
   industry: 1,
   companySize: 1,
 });
+
+companySchema.plugin(toJSONPlugin);
 
 export default mongoose.model("Company", companySchema);
