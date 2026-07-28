@@ -5,7 +5,7 @@ import {
   EXPERIENCE_LEVELS,
   JOB_STATUS,
   WORKPLACE_TYPES,
-} from "../../shared/constants";
+} from "../../shared/constants/index.js";
 
 import { addressSchema } from "../../shared/validators/address.validation.js";
 import { benefitSchema } from "../../shared/validators/benefit.validation.js";
