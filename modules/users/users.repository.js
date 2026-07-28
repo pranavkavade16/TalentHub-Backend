@@ -19,3 +19,15 @@ export const findUserById = async (id) => {
 export const findUserByIdWithRefreshToken = async (id) => {
   return User.findById(id).select("+refreshToken");
 };
+
+export const updateRefreshToken = async (userId, refreshToken) => {
+  return User.findByIdAndUpdate(
+    userId,
+    {
+      refreshToken,
+    },
+    {
+      new: true,
+    },
+  );
+};
