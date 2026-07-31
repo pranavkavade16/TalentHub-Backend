@@ -4,6 +4,7 @@ import {
   loginUser,
   refreshAccessToken,
   logoutUser,
+  getCurrentUser,
 } from "./auth.service.js";
 
 export const register = async (req, res, next) => {
@@ -67,6 +68,18 @@ export const logout = async (req, res, next) => {
     });
 
     return res.status(200).json(new ApiResponse(200, "Logout successful."));
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getLoggedUser = async (req, res) => {
+  try {
+    const user = await getCurrentUser(req.user.userId);
+
+    return res
+      .status(200)
+      .json(new ApiResponse(true, "User fetched successfully.", user));
   } catch (error) {
     next(error);
   }

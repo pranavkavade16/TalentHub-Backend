@@ -77,4 +77,31 @@ export const logoutUser = async (userId) => {
   await updateRefreshToken(userId, null);
 };
 
+export const getCurrentUser = async (userId) => {
+  const user = await User.findById(userId)
+    .select("-password -refreshToken")
+    .lean();
 
+  if (!user) {
+    throw new ApiError(404, "User not found.");
+  }
+
+  let profile = null;
+
+  if (user.role === "candidate") {
+    profile = await CandidateProfile.findOne({
+      user: user._id,
+    }).lean();
+  }
+
+  if (user.role === "recruiter") {
+    profile = await RecruiterProfile.findOne({
+      user: user._id,
+    }).lean();
+  }
+
+  return {
+    ...user,
+    profile,
+  };
+};
